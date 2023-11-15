@@ -15,7 +15,7 @@
             <h6 class="text-center text-dark fw-light">Yep, just a simple To-Do application</h6>
 
             <button type="button" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#addTodo" data-bs-whatever="">Add new TODO</button>
-            <button type="button" class="btn btn-danger w-100 mt-2" onclick="clearAllTodos()">Remove all TODOs</button>
+            <button type="button" class="btn btn-danger w-100 mt-2" data-bs-toggle="modal" data-bs-target="#removeAllTODOs">Remove all TODOs</button>
 
             <h4 class="mt-4 mb-1 text-primary">Available TODOs:</h4>
             <div id="lw__todoList-wrapper" class="font-monospace"></div>
@@ -35,35 +35,53 @@
             </div>
         </div>
 
-        <div class="modal fade" id="addTodo" tabindex="-1" aria-labelledby="addTodoLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="addTodoLabel">Add new TODO</h1>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <form>
-                    <div class="mb-3">
-                      <label for="todo-Title" class="col-form-label">Title</label>
-                      <input type="text" class="form-control" id="todo-Title">
-                    </div>
-                    <div class="mb-3">
-                      <label for="todo-Desc" class="col-form-label">Description</label>
-                      <textarea class="form-control" id="todo-Desc" style="max-height: 300px;"></textarea>
-                    </div>
-                  </form>
-                </div>
-                <div class="modal-footer">
-                  <button id="addTodoBtn" data-bs-dismiss="modal" type="button" class="btn btn-success" aria-label="Add TODO">Add TODO</button>
-                </div>
+        <div class="modal fade" id="removeAllTODOs" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="removeAllTODOsLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="removeAllTODOsLabel">Confirmation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                Are you sure you want to delete all the TODOs?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="clearAllTodos()">Confirm</button>
               </div>
             </div>
           </div>
+        </div>
 
-          <div id="success-float" class="text-black position-absolute d-flex align-items-center fw-bolder">
-            ✅ Todo successfully added!
+        <div class="modal fade" id="addTodo" tabindex="-1" aria-labelledby="addTodoLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="addTodoLabel">Add new TODO</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="mb-3">
+                    <label for="todo-Title" class="col-form-label">Title</label>
+                    <input type="text" class="form-control" id="todo-Title">
+                  </div>
+                  <div class="mb-3">
+                    <label for="todo-Desc" class="col-form-label">Description</label>
+                    <textarea class="form-control" id="todo-Desc" style="max-height: 300px;"></textarea>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button id="addTodoBtn" data-bs-dismiss="modal" type="button" class="btn btn-success" aria-label="Add TODO">Add TODO</button>
+              </div>
+            </div>
           </div>
+        </div>
+
+        <div id="success-float" class="text-black position-absolute d-flex align-items-center fw-bolder">
+          ✅ Todo successfully added!
+        </div>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

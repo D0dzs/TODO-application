@@ -106,8 +106,10 @@ const deleteTodoFromLS = (todoID) => {
 };
 
 const clearAllTodos = () => {
-  localStorage.clear();
-  location.reload();
+  setTimeout(() => {
+    localStorage.clear();
+    location.reload();
+  }, 1000);
 };
 
 // const x = localStorage.length + 1;
@@ -118,5 +120,4 @@ const clearAllTodos = () => {
 // console.log(y)
 
 document.body.onload = loadModalsFromLS();
-
 /* Made by Dodzs */
