@@ -1,0 +1,48 @@
+html,
+body {
+  overflow-x: hidden;
+}
+
+#right-wrapper {
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+#rw__topbar {
+  border-radius: 10px;
+  box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.242);
+}
+
+#rw__topbar div {
+  height: 24px;
+  width: 24px;
+  border-radius: 100%;
+  cursor: pointer;
+  background-color: var(--color);
+  border: 1px solid var(--border-color);
+}
+
+/* #lw__tL__Todo h5 span {
+    opacity: 0;
+    transition: all 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  #lw__tL__Todo h5:hover span {
+    opacity: 1;
+  } */
+
+#success-float {
+  height: 60px;
+  padding-left: 8px;
+  width: 250px;
+  background-color: greenyellow;
+  border: 1px solid green;
+  border-radius: 10px;
+  bottom: 10px;
+  right: 10px;
+  transition: all 400ms cubic-bezier(0.17, 0.67, 0.55, 1.21);
+  transform: translateX(110%);
+}
+
+
+/* Made by Dodzs */
