@@ -162,3 +162,5 @@ const clearAllTodos = () => {
 };
 
 document.body.onload = loadModalsFromLS();
+
+/* Made by Dodzs */
