@@ -1,66 +1,46 @@
+// Reading datas from LS if it not exists make them available
+var getTIDtrackFromLS = Number(localStorage.getItem("getTIDtrack"));
+if (getTIDtrackFromLS == null) {
+  localStorage.setItem("getTIDtrack", 0);
+}
+
+const todos = localStorage.getItem("todos");
+if (todos == null) {
+  localStorage.setItem("todos", JSON.stringify([]));
+}
+
+// If the modal is open and everything are filled out then add to the todo list
+// then clear the input fields
 const addTodo = document.getElementById("addTodo");
 if (addTodo) {
   const button = addTodo.querySelector(".modal-footer #addTodoBtn");
 
   button.addEventListener("click", () => {
+    const incrementedTodo = getTIDtrackFromLS + 1;
     const todoTitle = addTodo.querySelector(".modal-body input#todo-Title");
     const todoDesc = addTodo.querySelector(".modal-body textarea#todo-Desc");
     if (!todoTitle.value.length > 0 || !todoDesc.value.length > 0) {
-      clearInputFields(todoDesc, todoTitle);
-      return alert("Something went wrong!");
+      clearInputFields(todoTitle, todoDesc);
+      return alert("something went wrong");
     }
 
-    addTodoToLocalStorage(todoTitle.value, todoDesc.value);
+    addTodoToLS(incrementedTodo, todoTitle.value, todoDesc.value);
   });
   button.removeEventListener("click", {});
 }
 
-const loadModalsFromLS = () => {
-  const lwSidePanel = document.getElementById("lw__todoList-wrapper");
-
-  for (let i = 0; i < localStorage.length + 1; i++) {
-    const data = JSON.parse(localStorage.getItem(`todo${i + 1}`));
-
-    try {
-      const div = document.createElement("div");
-      div.setAttribute("id", "lw__tL__Todo");
-      div.setAttribute("class", "mb-2 opacity-75");
-      div.setAttribute("style", "cursor: pointer");
-      div.setAttribute("data-id", i + 1);
-      div.setAttribute("onclick", `openDetailedTodo(${i + 1})`);
-
-      const h5Title = document.createElement("h5");
-      h5Title.innerHTML = `> ${data["title"] || "Unknown TODO"}`;
-      h5Title.setAttribute(
-        "class",
-        "d-flex justify-content-between text-capitalize"
-      );
-
-      // const kukaIkonxd = document.createElement("span");
-      // kukaIkonxd.innerHTML = "🗑️";
-      // kukaIkonxd.setAttribute("style", "margin-right: 4px");
-      // kukaIkonxd.setAttribute("onclick", `deleteTodoFromLS(${i + 1})`);
-
-      // h5Title.appendChild(kukaIkonxd);
-
-      div.appendChild(h5Title);
-      lwSidePanel.append(div);
-    } catch (error) {}
-  }
-};
-
-const addTodoToLocalStorage = (todoTitle, todoDesc) => {
+// It's just self-explanatory
+const addTodoToLS = (todoID, todoTitle, todoDesc) => {
   const successFloat = document.getElementById("success-float");
-  let todoObj = {
+  let tempObject = {
+    id: todoID,
     title: todoTitle,
     desc: todoDesc,
   };
 
-  localStorage.setItem(
-    `todo${localStorage.length + 1}`,
-    JSON.stringify(todoObj)
-  );
-  clearInputFields(todoDesc, todoTitle);
+  var parsedTodos = JSON.parse(localStorage.getItem("todos"));
+  const stringifiedTodo = JSON.stringify(tempObject);
+  parsedTodos.push(stringifiedTodo);
 
   successFloat.style.transform = "translateX(0%)";
   setTimeout(() => {
@@ -70,6 +50,99 @@ const addTodoToLocalStorage = (todoTitle, todoDesc) => {
   setTimeout(() => {
     location.reload();
   }, 1500);
+
+  localStorage.setItem("getTIDtrack", todoID);
+  localStorage.setItem("todos", JSON.stringify(parsedTodos));
+};
+
+// If the page loads then load the todos to the sidebar
+const loadModalsFromLS = () => {
+  const lwSidePanel = document.getElementById("lw__todoList-wrapper");
+  const todos = JSON.parse(localStorage.getItem("todos"));
+
+  todos.forEach((e) => {
+    var parsedElement = JSON.parse(e);
+    const { id, title } = parsedElement;
+
+    const div = document.createElement("div");
+    div.setAttribute("id", "lw__tL__Todo");
+    div.setAttribute("class", "mb-2 opacity-75");
+    div.setAttribute("style", "cursor: pointer");
+    div.setAttribute("onclick", `openDetailedTodo(${id})`);
+
+    const h5Title = document.createElement("h5");
+    h5Title.innerHTML = `> ${title || "None"}`;
+    h5Title.setAttribute(
+      "class",
+      "d-flex justify-content-between text-capitalize"
+    );
+
+    const kukaIkonxd = document.createElement("span");
+    kukaIkonxd.innerHTML = "🗑️";
+    kukaIkonxd.setAttribute("style", "margin-right: 4px");
+    kukaIkonxd.setAttribute("onclick", `deleteTodoFromLS(${id})`);
+
+    h5Title.appendChild(kukaIkonxd);
+    div.appendChild(h5Title);
+    lwSidePanel.append(div);
+  });
+};
+
+// If the user wants to read the TODO, it'll expand the todo to the
+// right side with the provided content / description
+const openDetailedTodo = (todoID) => {
+  const todos = JSON.parse(localStorage.getItem(`todos`));
+  todos.forEach((e) => {
+    var parsedElement = JSON.parse(e);
+
+    const { id, title, desc } = parsedElement;
+    if (id !== todoID) return;
+
+    const rwdTitle = document.getElementById("rw__detailed-title");
+    const dtcDesc = document.getElementById("dtc__desc");
+
+    rwdTitle.innerText = title;
+    dtcDesc.innerText = desc;
+  });
+};
+
+// If the user is done with the TODO and wants to delete it
+// it can be done by clicking on the "Trashcan" icon
+const deleteTodoFromLS = (todoID) => {
+  const todos = JSON.parse(localStorage.getItem("todos"));
+  todos.forEach((e) => {
+    // code generated by Bing AI (gpt-4)
+    var parsedElement = JSON.parse(e);
+    const { id, title } = parsedElement;
+
+    if (id === todoID) {
+      const index = todos.findIndex((e) => {
+        var element = JSON.parse(e);
+        return element.id === todoID;
+      });
+
+      if (index !== -1) {
+        // Modified by me 🔥
+        const newTodoList = todos.filter((e) => JSON.parse(e).id !== todoID);
+        localStorage.setItem("todos", JSON.stringify(newTodoList));
+        alert(`Todo with title **${title}** has been removed from the list!`);
+        location.reload();
+
+        // code generated by Bing AI (gpt-4)
+      } else {
+        console.log(`No todo with id ${todoID} found in the todos array.`);
+      }
+    }
+  });
+};
+
+// From now just clear functions are defined
+const clearDateiledSection = () => {
+  const rwdTitle = document.getElementById("rw__detailed-title");
+  const dtcDesc = document.getElementById("dtc__desc");
+
+  rwdTitle.innerText = "";
+  dtcDesc.innerText = "";
 };
 
 const clearInputFields = (div, div2) => {
@@ -81,43 +154,11 @@ const clearInputFields = (div, div2) => {
   }
 };
 
-const openDetailedTodo = (todoID) => {
-  const data = JSON.parse(localStorage.getItem(`todo${todoID}`));
-  const rwdTitle = document.getElementById("rw__detailed-title");
-  const dtcDesc = document.getElementById("dtc__desc");
-  rwdTitle.innerText = data["title"];
-  dtcDesc.innerText = data["desc"];
-};
-
-const clearDateiledSection = () => {
-  const rwdTitle = document.getElementById("rw__detailed-title");
-  const dtcDesc = document.getElementById("dtc__desc");
-
-  rwdTitle.innerText = "";
-  dtcDesc.innerText = "";
-};
-
-// TODO: fixme c:
-const deleteTodoFromLS = (todoID) => {
-  return alert("This feature is not working yet... 😪");
-  localStorage.removeItem(`todo${todoID}`);
-  alert(`Todo${todoID} has been removed from localStorage!`);
-  location.reload();
-};
-
 const clearAllTodos = () => {
   setTimeout(() => {
     localStorage.clear();
     location.reload();
-  }, 1000);
+  }, 500);
 };
 
-// const x = localStorage.length + 1;
-// const y = [];
-// for (let i = 1; i < x; i++) {
-//   y.push(JSON.parse(localStorage.getItem(`todo${i}`)));
-// }
-// console.log(y)
-
 document.body.onload = loadModalsFromLS();
-/* Made by Dodzs */
