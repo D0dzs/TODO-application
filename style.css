@@ -32,6 +32,7 @@ body {
 }
 
 #success-float {
+  z-index: 9999;
   height: 60px;
   padding-left: 8px;
   width: 250px;
@@ -42,6 +43,27 @@ body {
   right: 10px;
   transition: all 400ms cubic-bezier(0.17, 0.67, 0.55, 1.21);
   transform: translateX(110%);
+}
+
+#togithubpage {
+  overflow: hidden;
+  position: absolute;
+  right: 0%;
+  bottom: 1%;
+  z-index: 999;
+  width: 90px;
+  border-radius: 20px 0px 0px 20px;
+  transform: translateX(30px);
+  border: 1px solid #aaaaaa;
+  transition: all 200ms cubic-bezier(0.17, 0.67, 0.55, 1.21);
+}
+
+#togithubpage:hover {
+  transform: translateX(15px);
+}
+
+#togithubpage > div img {
+  height: 32px;
 }
 
 /* Made by Dodzs */
