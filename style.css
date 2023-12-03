@@ -3,6 +3,17 @@ body {
   overflow-x: hidden;
 }
 
+@media only screen and (max-width: 768px) {
+  html, body {
+    overflow: hidden hidden !important;
+  }
+
+  #root {
+    flex-direction: column !important;
+    gap: 1rem;
+  }
+}
+
 #right-wrapper {
   background-color: #fff;
   border-radius: 10px;
