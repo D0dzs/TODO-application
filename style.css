@@ -4,13 +4,29 @@ body {
 }
 
 @media only screen and (max-width: 768px) {
-  html, body {
+  html,
+  body {
     overflow: hidden hidden !important;
   }
 
   #root {
     flex-direction: column !important;
     gap: 1rem;
+  }
+
+  #success-float,
+  #togithubpage {
+    display: none !important;
+  }
+
+  #lw__tL__Todo h5 span {
+    opacity: 1 !important;
+  }
+
+  #removeAllTODOs,
+  #addTodo {
+    padding: 1rem !important;
+    font-size: smaller !important;
   }
 }
 
